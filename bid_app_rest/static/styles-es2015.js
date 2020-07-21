@@ -441,7 +441,7 @@ module.exports = exported;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\django-projects\angular-frontend\bid-app\src\styles.css */"./src/styles.css");
+module.exports = __webpack_require__(/*! D:\personal_projects\django-projects\angular-frontend\bid-app\src\styles.css */"./src/styles.css");
 
 
 /***/ })

@@ -735,76 +735,84 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _app_services_auth_interceptor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _app_services_rest_api_server_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! @app/services/rest-api-server.service */
+    "./src/app/services/rest-api-server.service.ts");
+    /* harmony import */
+
+
+    var _app_services_auth_interceptor__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @app/services/auth-interceptor */
     "./src/app/services/auth-interceptor.ts");
     /* harmony import */
 
 
-    var _app_authentication_register_register_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _app_authentication_register_register_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! @app/authentication/register/register.component */
     "./src/app/authentication/register/register.component.ts");
     /* harmony import */
 
 
-    var _app_authentication_login_login_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _app_authentication_login_login_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! @app/authentication/login/login.component */
     "./src/app/authentication/login/login.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_events_event_list_event_list_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _app_dashboard_events_event_list_event_list_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! @app/dashboard/events/event-list/event-list.component */
     "./src/app/dashboard/events/event-list/event-list.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_events_event_detail_event_detail_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var _app_dashboard_events_event_detail_event_detail_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
     /*! @app/dashboard/events/event-detail/event-detail.component */
     "./src/app/dashboard/events/event-detail/event-detail.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_profile_profile_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _app_dashboard_profile_profile_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
     /*! @app/dashboard/profile/profile.component */
     "./src/app/dashboard/profile/profile.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    var _app_dashboard_page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
     /*! @app/dashboard/page-not-found/page-not-found.component */
     "./src/app/dashboard/page-not-found/page-not-found.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_admin_admin_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    var _app_dashboard_admin_admin_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
     /*! @app/dashboard/admin/admin.component */
     "./src/app/dashboard/admin/admin.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_admin_user_update_by_admin_user_update_by_admin_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    var _app_dashboard_admin_user_update_by_admin_user_update_by_admin_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
     /*! @app/dashboard/admin/user-update-by-admin/user-update-by-admin.component */
     "./src/app/dashboard/admin/user-update-by-admin/user-update-by-admin.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_events_event_create_event_create_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    var _app_dashboard_events_event_create_event_create_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
     /*! @app/dashboard/events/event-create/event-create.component */
     "./src/app/dashboard/events/event-create/event-create.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    var _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
     /*! @app/dashboard/profile/profile-update/profile-update.component */
     "./src/app/dashboard/profile/profile-update/profile-update.component.ts");
     /* harmony import */
 
 
-    var _app_dashboard_profile_profile_image_profile_image_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    var _app_dashboard_profile_profile_image_profile_image_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
     /*! @app/dashboard/profile/profile-image/profile-image.component */
     "./src/app/dashboard/profile/profile-image/profile-image.component.ts"); // add this
     // add this
+
+    /* adding rest-api-server-service here so that it is instantiated before any other service as it wil provide rest-api-server path*/
     //need to be injected-->add in providers array
 
 
@@ -826,9 +834,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       },
       providers: [{
         provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HTTP_INTERCEPTORS"],
-        useClass: _app_services_auth_interceptor__WEBPACK_IMPORTED_MODULE_7__["AuthTokenInterceptor"],
+        useClass: _app_services_auth_interceptor__WEBPACK_IMPORTED_MODULE_8__["AuthTokenInterceptor"],
         multi: true
-      }],
+      }, _app_services_rest_api_server_service__WEBPACK_IMPORTED_MODULE_7__["RestApiServerService"]],
       imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtModule"].forRoot({
         config: {
           tokenGetter: tokenGetter,
@@ -841,7 +849,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     (function () {
       (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, {
         declarations: [//all the modules the application has
-        _app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _app_authentication_register_register_component__WEBPACK_IMPORTED_MODULE_8__["RegisterComponent"], _app_authentication_login_login_component__WEBPACK_IMPORTED_MODULE_9__["LoginComponent"], _app_dashboard_events_event_list_event_list_component__WEBPACK_IMPORTED_MODULE_10__["EventListComponent"], _app_dashboard_events_event_detail_event_detail_component__WEBPACK_IMPORTED_MODULE_11__["EventDetailComponent"], _app_dashboard_profile_profile_component__WEBPACK_IMPORTED_MODULE_12__["ProfileComponent"], _app_dashboard_page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_13__["PageNotFoundComponent"], _app_dashboard_admin_admin_component__WEBPACK_IMPORTED_MODULE_14__["AdminComponent"], _app_dashboard_admin_user_update_by_admin_user_update_by_admin_component__WEBPACK_IMPORTED_MODULE_15__["UserUpdateByAdminComponent"], _app_dashboard_events_event_create_event_create_component__WEBPACK_IMPORTED_MODULE_16__["EventCreateComponent"], _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_17__["ProfileUpdateComponent"], _app_dashboard_profile_profile_image_profile_image_component__WEBPACK_IMPORTED_MODULE_18__["ProfileImageComponent"]],
+        _app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _app_authentication_register_register_component__WEBPACK_IMPORTED_MODULE_9__["RegisterComponent"], _app_authentication_login_login_component__WEBPACK_IMPORTED_MODULE_10__["LoginComponent"], _app_dashboard_events_event_list_event_list_component__WEBPACK_IMPORTED_MODULE_11__["EventListComponent"], _app_dashboard_events_event_detail_event_detail_component__WEBPACK_IMPORTED_MODULE_12__["EventDetailComponent"], _app_dashboard_profile_profile_component__WEBPACK_IMPORTED_MODULE_13__["ProfileComponent"], _app_dashboard_page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_14__["PageNotFoundComponent"], _app_dashboard_admin_admin_component__WEBPACK_IMPORTED_MODULE_15__["AdminComponent"], _app_dashboard_admin_user_update_by_admin_user_update_by_admin_component__WEBPACK_IMPORTED_MODULE_16__["UserUpdateByAdminComponent"], _app_dashboard_events_event_create_event_create_component__WEBPACK_IMPORTED_MODULE_17__["EventCreateComponent"], _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_18__["ProfileUpdateComponent"], _app_dashboard_profile_profile_image_profile_image_component__WEBPACK_IMPORTED_MODULE_19__["ProfileImageComponent"]],
         imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtModule"]]
       });
     })();
@@ -862,9 +870,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           })],
           providers: [{
             provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HTTP_INTERCEPTORS"],
-            useClass: _app_services_auth_interceptor__WEBPACK_IMPORTED_MODULE_7__["AuthTokenInterceptor"],
+            useClass: _app_services_auth_interceptor__WEBPACK_IMPORTED_MODULE_8__["AuthTokenInterceptor"],
             multi: true
-          }],
+          }, _app_services_rest_api_server_service__WEBPACK_IMPORTED_MODULE_7__["RestApiServerService"]],
           bootstrap: [_app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         }]
       }], null, null);
@@ -2270,9 +2278,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         if (rf & 2) {
-          var _r9 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](35);
-
           var _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](6);
+
+          var _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](11);
 
           var _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](17);
 
@@ -2280,7 +2288,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           var _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](29);
 
-          var _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](11);
+          var _r9 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](35);
 
           var _r11 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](41);
 
@@ -8172,18 +8180,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! @auth0/angular-jwt */
-    "./node_modules/@auth0/angular-jwt/__ivy_ngcc__/fesm2015/auth0-angular-jwt.js"); //to read jwt-token payload
+    "./node_modules/@auth0/angular-jwt/__ivy_ngcc__/fesm2015/auth0-angular-jwt.js");
+    /* harmony import */
+
+
+    var _rest_api_server_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! ./rest-api-server.service */
+    "./src/app/services/rest-api-server.service.ts"); //to read jwt-token payload
 
 
     var AuthService = /*#__PURE__*/function () {
-      function AuthService(http, jwtHelper) {
+      function AuthService(http, jwtHelper, restapi) {
         _classCallCheck(this, AuthService);
 
         this.http = http;
         this.jwtHelper = jwtHelper;
-        this.url = "https://sunil-bid-app.herokuapp.com/"; //behavior subject containing loginStatus, (expiration,is_staff and user_id)-->from token
+        this.restapi = restapi; //behavior subject containing loginStatus, (expiration,is_staff and user_id)-->from token
 
         this.subject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](new _app_classes_logged_in_user__WEBPACK_IMPORTED_MODULE_3__["LoggedInUser"]());
+        this.url = restapi.path;
       } //returning logged in user
 
 
@@ -8287,7 +8302,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     AuthService.ɵfac = function AuthService_Factory(t) {
-      return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtHelperService"]));
+      return new (t || AuthService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtHelperService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_rest_api_server_service__WEBPACK_IMPORTED_MODULE_7__["RestApiServerService"]));
     };
 
     AuthService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -8308,6 +8323,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
         }, {
           type: _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtHelperService"]
+        }, {
+          type: _rest_api_server_service__WEBPACK_IMPORTED_MODULE_7__["RestApiServerService"]
         }];
       }, null);
     })();
@@ -8358,13 +8375,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./rest-api-server.service */
+    "./src/app/services/rest-api-server.service.ts");
 
     var BidService = /*#__PURE__*/function () {
-      function BidService(http) {
+      function BidService(http, restapi) {
         _classCallCheck(this, BidService);
 
         this.http = http;
-        this.url = "https://sunil-bid-app.herokuapp.com/api/events/";
+        this.restapi = restapi;
+        this.url = restapi.path + 'api/events/';
       }
 
       _createClass(BidService, [{
@@ -8409,7 +8433,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     BidService.ɵfac = function BidService_Factory(t) {
-      return new (t || BidService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]));
+      return new (t || BidService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]));
     };
 
     BidService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -8428,6 +8452,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }], function () {
         return [{
           type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
+        }, {
+          type: _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]
         }];
       }, null);
     })();
@@ -8595,13 +8621,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./rest-api-server.service */
+    "./src/app/services/rest-api-server.service.ts");
 
     var EventService = /*#__PURE__*/function () {
-      function EventService(http) {
+      function EventService(http, restapi) {
         _classCallCheck(this, EventService);
 
         this.http = http;
-        this.url = "https://sunil-bid-app.herokuapp.com/api/events/";
+        this.restapi = restapi;
+        this.url = restapi.path + 'api/events/';
       } //handle error
 
 
@@ -8666,7 +8699,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     EventService.ɵfac = function EventService_Factory(t) {
-      return new (t || EventService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]));
+      return new (t || EventService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]));
     };
 
     EventService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -8685,6 +8718,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }], function () {
         return [{
           type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
+        }, {
+          type: _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]
         }];
       }, null);
     })();
@@ -8735,14 +8770,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./rest-api-server.service */
+    "./src/app/services/rest-api-server.service.ts");
 
     var RegisterService = /*#__PURE__*/function () {
-      function RegisterService(http) {
+      function RegisterService(http, restapi) {
         _classCallCheck(this, RegisterService);
 
-        this.http = http; //url string
-
-        this.url = "https://sunil-bid-app.herokuapp.com/user/create/";
+        this.http = http;
+        this.restapi = restapi;
+        this.url = restapi.path + 'user/create/';
       } //handle error
 
 
@@ -8777,7 +8818,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     RegisterService.ɵfac = function RegisterService_Factory(t) {
-      return new (t || RegisterService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]));
+      return new (t || RegisterService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]));
     };
 
     RegisterService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -8796,7 +8837,62 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }], function () {
         return [{
           type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
+        }, {
+          type: _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]
         }];
+      }, null);
+    })();
+    /***/
+
+  },
+
+  /***/
+  "./src/app/services/rest-api-server.service.ts":
+  /*!*****************************************************!*\
+    !*** ./src/app/services/rest-api-server.service.ts ***!
+    \*****************************************************/
+
+  /*! exports provided: RestApiServerService */
+
+  /***/
+  function srcAppServicesRestApiServerServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "RestApiServerService", function () {
+      return RestApiServerService;
+    });
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+
+    var RestApiServerService = function RestApiServerService() {
+      _classCallCheck(this, RestApiServerService);
+
+      this.path = "https://bid-app-project.herokuapp.com/";
+    };
+
+    RestApiServerService.ɵfac = function RestApiServerService_Factory(t) {
+      return new (t || RestApiServerService)();
+    };
+
+    RestApiServerService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+      token: RestApiServerService,
+      factory: RestApiServerService.ɵfac
+    });
+    /*@__PURE__*/
+
+    (function () {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](RestApiServerService, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+      }], function () {
+        return [];
       }, null);
     })();
     /***/
@@ -9028,13 +9124,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./rest-api-server.service */
+    "./src/app/services/rest-api-server.service.ts");
 
     var UserService = /*#__PURE__*/function () {
-      function UserService(http) {
+      function UserService(http, restapi) {
         _classCallCheck(this, UserService);
 
         this.http = http;
-        this.url = "https://sunil-bid-app.herokuapp.com/user/";
+        this.restapi = restapi;
+        this.url = restapi.path + 'user/';
       } //update user by admin
 
 
@@ -9115,7 +9218,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     UserService.ɵfac = function UserService_Factory(t) {
-      return new (t || UserService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]));
+      return new (t || UserService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]));
     };
 
     UserService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
@@ -9134,6 +9237,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }], function () {
         return [{
           type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]
+        }, {
+          type: _rest_api_server_service__WEBPACK_IMPORTED_MODULE_4__["RestApiServerService"]
         }];
       }, null);
     })();
@@ -9239,7 +9344,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   /***/
   function _(module, exports, __webpack_require__) {
     module.exports = __webpack_require__(
-    /*! D:\django-projects\angular-frontend\bid-app\src\main.ts */
+    /*! D:\personal_projects\django-projects\angular-frontend\bid-app\src\main.ts */
     "./src/main.ts");
     /***/
   }
