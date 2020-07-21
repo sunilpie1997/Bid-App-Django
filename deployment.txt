@@ -1,0 +1,88 @@
+*************FOLLOW THESE STEPS INSIDE VISUAL  STUDIO CODE 'TERMINAL' AFTER CLONING THIS PROJECT*******************
+
+1) cd bid-app:<go inside project directory>
+
+     a)install all the packages required from the 'requirements.txt' file.ex:django,pillow,djangorestframework,etc.
+     b)install postgres database .
+          create database with <db-name> specified in <your project>.setting.py
+    
+     c)python manage.py makemigrations
+
+     d)python manage.py migrate
+
+     e)python manage.py createsuperuser
+
+          enter your crediantials:You are the admin
+
+     f)python manage.py runserver
+
+
+************************************heroku***********************
+
+
+Link to help you:https://devcenter.heroku.com/articles/deploying-python
+
+
+2) create free account on heroku and create an app with name <app-name>
+
+3) create an add on:Heroku postgres.name of your database is <database-name>'-->ex:postgresql-cylindrical-93070
+
+4) install heroku CLI
+
+5)heroku login : <follow steps and login>
+
+6) git init <initialise git within root project directory>
+
+7) heroku git:remote -a <app-name>
+
+8)make any changes if any,and then commit.
+
+Important:
+
+->heroku config:set DISABLE_COLLECTSTATIC=1
+
+9)git push heroku master: pushes project to remote heroku git
+
+**********************************************
+
+Note:after executing above instructions---> 
+
+     a) all the requirements and runtime (if any) in 'requirements.txt' and 'runtime.txt' are installed
+     b)finally ,the app is deployed.
+     c)But wait,we also have to export database.
+
+
+*************************Instructions to export your local postgres database*********
+
+Note: Before you export,make sure you have created addon 'Heroku postgres'.....
+
+1)open your pgadmin
+
+2)execute below queries:
+
+     a)CREATE USER <username> WITH PASSWORD 'password'
+     Important:here 'username' should be your <github-user-name>  
+     Otherwise,the default 'postgres' username was enough:)) 
+
+     b)GRANT ALL ON ALL TABLES IN SCHEMA public to <username>;
+     GRANT ALL ON ALL SEQUENCES IN SCHEMA public to <username>;
+     GRANT ALL ON ALL FUNCTIONS IN SCHEMA public to <username>;
+
+     
+     c)heroku pg:push postgres://localhost/<your-local-db-name> <heroku-postgres-db-name> --app <heroku-app-name>
+
+     d)enter password at the prompt-->password for <username> that you created in step (a).
+
+     e)now your all the tables and data will be exported to 'heroku postgres database'.
+
+
+3)Finally,you can now check if you can register on the website...and all other stuff :))
+
+
+4)Now whenever you make any changes in your project,just commit and then execute:
+
+     git push heroku master
+
+5)sometimes,you have to login in your heroku account using:
+
+     heroku login

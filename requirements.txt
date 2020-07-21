@@ -1,0 +1,17 @@
+django
+gunicorn
+django-environ
+django-heroku
+whitenoise
+boto3
+django-storages
+psycopg2
+psycopg2-binary
+dj-database-url
+djangorestframework
+djangorestframework-simplejwt 
+markdown
+django-filter
+djangorestframework-jwt
+django-cors-headers
+pillow
