@@ -5,7 +5,7 @@ Note:This project is combination of django_bid_app(rest api)----->https://github
       
 Note:This project has been deployed on HEROKU : a cloud platform of SALESFORCE
 
-Link: http://sunil-bid-app.herokuapp.com/
+Link: https://bid-app-project.herokuapp.com/
 Link:uploading to amazon-s3:https://simpleisbetterthancomplex.com/tutorial/2017/08/01/how-to-setup-amazon-s3-in-a-django-project.html#working-with-static-and-media-assets
 
 
