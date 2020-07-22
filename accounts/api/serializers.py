@@ -22,7 +22,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields=['contact_no','address','pincode','is_auctioneer','bio','image','is_bidder']
 
     def validate_contact_no(self,value):
-        print("come here, i will catch you")
+        print("come here, i will catch you",self," ")
         value_count=Profile.objects.filter(contact_no=value).count()
         if(value_count>1):#1 will indiacate only one occurence of given contact_no
         #count() is more efficient than len()
