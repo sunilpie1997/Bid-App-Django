@@ -5,6 +5,20 @@ from django.contrib.auth import get_user_model
     
 User = get_user_model()#custom user model
 
+def validate_contact_no(user,contact_no):#user will be 'None' when creating user and will be an instance of 'User' while upadting user
+    if(isinstance(user,User)):
+        print("come here, i will catch you")
+        value_count=Profile.objects.exclude(contact_no=user.profile.contact_no).count()
+        if(value_count>0):#excluding current instance's contact_no for uniqueness(see limitation of updating nested serializers)
+            #count() is more efficient than len()
+            return False
+        return True
+    else:
+        value_count=Profile.objects.filter(contact_no=contact_no).count()
+        if(value_count>0):
+            return False
+        else:
+            return True
 
 
 #profile serializer(for retrieval and creation and full updation)-->by user
@@ -20,14 +34,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=Profile
         fields=['contact_no','address','pincode','is_auctioneer','bio','image','is_bidder']
-
-    def validate_contact_no(self,value):
-        print("come here, i will catch you"+str(self))
-        value_count=Profile.objects.filter(contact_no=value).count()
-        if(value_count>1):#excluding current instance's contact_no for uniqueness(see limitation of updating nested serializers)
-        #count() is more efficient than len()
-            raise serializers.ValidationError("account with this contact no. exists")
-        return value
 
 
 # user serializer (for retrieval and Full updation by individual user)except password
@@ -48,6 +54,9 @@ class UserSerializer(serializers.ModelSerializer):
         instance.last_name=validated_data.get("last_name")
         profile_data=validated_data.pop("profile")
         instance.profile.contact_no=profile_data.get("contact_no")
+        if(not validate_contact_no(instance,None)):
+            raise serializers.ValidationError("account with this contact no. exists")
+
         instance.profile.address=profile_data.get("address")
         instance.profile.pincode=profile_data.get("pincode")
         instance.profile.bio=profile_data.get("bio")
@@ -80,6 +89,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
         last_name=validated_data["last_name"]
         password=validated_data["password"]
         profile_data=validated_data.pop("profile")
+
+        if(not validate_contact_no(None,profile_data["contact_no"])):
+            raise serializers.ValidationError("account with this contact no. exists")
 
         user_profile=Profile(**profile_data)
         #user is created and saved
