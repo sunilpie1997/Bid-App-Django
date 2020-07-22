@@ -91,7 +91,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 #for full profile update by admin
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     image=serializers.ImageField(read_only=True)
-    contact_no =serializers.RegexField("^[1-9][0-9]{9}$",required=True,validators=[UniqueValidator(queryset=Profile.objects.all(),message="Account with this contact no exists")])
+    contact_no =serializers.RegexField("^[1-9][0-9]{9}$",required=True)
     #,validators=[UniqueValidator(queryset=Profile.objects.all(),message="Account with this contact no exists")]
     #limitation of validators in django rest framework
     address = serializers.CharField(max_length=100,min_length=10,required=True)
