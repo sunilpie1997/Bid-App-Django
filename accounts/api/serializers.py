@@ -141,6 +141,10 @@ class UserByAdminSerializer(serializers.ModelSerializer):
         instance.first_name=validated_data.get("first_name")
         instance.last_name=validated_data.get("last_name")
         profile_data=validated_data.pop("profile")
+
+        if(not validate_contact_no(instance,None)):
+            raise serializers.ValidationError("account with this contact no. exists")
+        
         instance.profile.contact_no=profile_data.get("contact_no")
         instance.profile.address=profile_data.get("address")
         instance.profile.pincode=profile_data.get("pincode")
