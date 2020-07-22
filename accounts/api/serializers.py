@@ -22,9 +22,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields=['contact_no','address','pincode','is_auctioneer','bio','image','is_bidder']
 
     def validate_contact_no(self,value):
-        print("come here, i will catch you",self," ")
+        print("come here, i will catch you"+self)
         value_count=Profile.objects.filter(contact_no=value).count()
-        if(value_count>1):#1 will indiacate only one occurence of given contact_no
+        if(value_count>1):#excluding current instance's contact_no for uniqueness(see limitation of updating nested serializers)
         #count() is more efficient than len()
             raise serializers.ValidationError("account with this contact no. exists")
         return value
