@@ -671,19 +671,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     !*** ./src/app/app.module.ts ***!
     \*******************************/
 
-  /*! exports provided: tokenGetter, AppModule */
+  /*! exports provided: AppModule */
 
   /***/
   function srcAppAppModuleTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "tokenGetter", function () {
-      return tokenGetter;
-    });
     /* harmony export (binding) */
 
 
@@ -816,10 +810,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     //need to be injected-->add in providers array
 
 
-    function tokenGetter() {
-      return sessionStorage.getItem("token");
-    }
-
     var AppModule = function AppModule() {
       _classCallCheck(this, AppModule);
     };
@@ -838,11 +828,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         multi: true
       }, _app_services_rest_api_server_service__WEBPACK_IMPORTED_MODULE_7__["RestApiServerService"]],
       imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtModule"].forRoot({
-        config: {
-          tokenGetter: tokenGetter,
-          whitelistedDomains: ["http://127.0.0.1:8000"],
-          blacklistedRoutes: ["http://example.com/examplebadroute/"]
-        }
+        config: {}
       })]]
     });
 
@@ -862,11 +848,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         args: [{
           declarations: [_app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["RoutingComponent"]],
           imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"], _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtModule"].forRoot({
-            config: {
-              tokenGetter: tokenGetter,
-              whitelistedDomains: ["http://127.0.0.1:8000"],
-              blacklistedRoutes: ["http://example.com/examplebadroute/"]
-            }
+            config: {}
           })],
           providers: [{
             provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HTTP_INTERCEPTORS"],
@@ -1202,6 +1184,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             'password': this.LoginUser.password
           }).subscribe( //clearing out session storage
           function (resp) {
+            _this4.LoginUser = {
+              username: null,
+              password: null
+            };
             sessionStorage.clear(); //extra protection
             //storing access token received in session storage
 
@@ -1358,15 +1344,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _app_classes_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @app/classes/user */
-    "./src/app/classes/user.ts");
+    var _app_classes_profile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @app/classes/profile */
+    "./src/app/classes/profile.ts");
     /* harmony import */
 
 
-    var _app_classes_profile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @app/classes/profile */
-    "./src/app/classes/profile.ts");
+    var _app_classes_new_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @app/classes/new-user */
+    "./src/app/classes/new-user.ts");
     /* harmony import */
 
 
@@ -2002,7 +1988,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         key: "ngOnInit",
         value: function ngOnInit() {
           //initialising with default null values-->see constructor of user 
-          this.user = new _app_classes_user__WEBPACK_IMPORTED_MODULE_1__["User"](new _app_classes_profile__WEBPACK_IMPORTED_MODULE_2__["Profile"]());
+          this.user = new _app_classes_new_user__WEBPACK_IMPORTED_MODULE_2__["NewUser"](new _app_classes_profile__WEBPACK_IMPORTED_MODULE_1__["Profile"]());
         }
       }, {
         key: "onSubmit",
@@ -2541,6 +2527,48 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   },
 
   /***/
+  "./src/app/classes/new-user.ts":
+  /*!*************************************!*\
+    !*** ./src/app/classes/new-user.ts ***!
+    \*************************************/
+
+  /*! exports provided: NewUser */
+
+  /***/
+  function srcAppClassesNewUserTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "NewUser", function () {
+      return NewUser;
+    });
+
+    var NewUser = function NewUser(profile) {
+      var username = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var first_name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      var password = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+      var last_name = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+      var email = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+      var confirm_password = arguments.length > 6 ? arguments[6] : undefined;
+
+      _classCallCheck(this, NewUser);
+
+      this.username = username;
+      this.first_name = first_name;
+      this.password = password;
+      this.last_name = last_name;
+      this.email = email;
+      this.profile = profile;
+      this.confirm_password = confirm_password;
+    };
+    /***/
+
+  },
+
+  /***/
   "./src/app/classes/product.ts":
   /*!************************************!*\
     !*** ./src/app/classes/product.ts ***!
@@ -2672,20 +2700,16 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var User = function User(profile) {
       var username = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var first_name = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-      var password = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-      var last_name = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-      var email = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
-      var confirm_password = arguments.length > 6 ? arguments[6] : undefined;
+      var last_name = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+      var email = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
 
       _classCallCheck(this, User);
 
       this.username = username;
       this.first_name = first_name;
-      this.password = password;
       this.last_name = last_name;
       this.email = email;
       this.profile = profile;
-      this.confirm_password = confirm_password;
     };
     /***/
 

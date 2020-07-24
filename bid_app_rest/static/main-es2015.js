@@ -323,12 +323,11 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
 /*!*******************************!*\
   !*** ./src/app/app.module.ts ***!
   \*******************************/
-/*! exports provided: tokenGetter, AppModule */
+/*! exports provided: AppModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tokenGetter", function() { return tokenGetter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
@@ -375,9 +374,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function tokenGetter() {
-    return sessionStorage.getItem("token");
-}
 class AppModule {
 }
 AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]] });
@@ -393,11 +389,7 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
             _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
             _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtModule"].forRoot({
-                config: {
-                    tokenGetter: tokenGetter,
-                    whitelistedDomains: ["http://127.0.0.1:8000"],
-                    blacklistedRoutes: ["http://example.com/examplebadroute/"],
-                },
+                config: {},
             }),
         ]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵsetNgModuleScope"](AppModule, { declarations: [//all the modules the application has
@@ -416,11 +408,7 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector
                     _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
                     _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
                     _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtModule"].forRoot({
-                        config: {
-                            tokenGetter: tokenGetter,
-                            whitelistedDomains: ["http://127.0.0.1:8000"],
-                            blacklistedRoutes: ["http://example.com/examplebadroute/"],
-                        },
+                        config: {},
                     }),
                 ],
                 providers: [
@@ -580,6 +568,10 @@ class LoginComponent {
         this.authService.login({ 'username': this.LoginUser.username, 'password': this.LoginUser.password }).subscribe(
         //clearing out session storage
         resp => {
+            this.LoginUser = {
+                username: null,
+                password: null
+            };
             sessionStorage.clear(); //extra protection
             //storing access token received in session storage
             sessionStorage.setItem('token', resp.body["access"]);
@@ -656,8 +648,8 @@ LoginComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterComponent", function() { return RegisterComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
-/* harmony import */ var _app_classes_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @app/classes/user */ "./src/app/classes/user.ts");
-/* harmony import */ var _app_classes_profile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/classes/profile */ "./src/app/classes/profile.ts");
+/* harmony import */ var _app_classes_profile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @app/classes/profile */ "./src/app/classes/profile.ts");
+/* harmony import */ var _app_classes_new_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/classes/new-user */ "./src/app/classes/new-user.ts");
 /* harmony import */ var _app_services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @app/services/auth.service */ "./src/app/services/auth.service.ts");
 /* harmony import */ var _app_services_register_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @app/services/register.service */ "./src/app/services/register.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
@@ -976,7 +968,7 @@ class RegisterComponent {
     }
     ngOnInit() {
         //initialising with default null values-->see constructor of user 
-        this.user = new _app_classes_user__WEBPACK_IMPORTED_MODULE_1__["User"](new _app_classes_profile__WEBPACK_IMPORTED_MODULE_2__["Profile"]());
+        this.user = new _app_classes_new_user__WEBPACK_IMPORTED_MODULE_2__["NewUser"](new _app_classes_profile__WEBPACK_IMPORTED_MODULE_1__["Profile"]());
     }
     onSubmit() {
         this.registerService.registerUser(this.user).subscribe(resp => {
@@ -1244,6 +1236,31 @@ class LoggedInUser {
 
 /***/ }),
 
+/***/ "./src/app/classes/new-user.ts":
+/*!*************************************!*\
+  !*** ./src/app/classes/new-user.ts ***!
+  \*************************************/
+/*! exports provided: NewUser */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewUser", function() { return NewUser; });
+class NewUser {
+    constructor(profile, username = null, first_name = null, password = null, last_name = null, email = null, confirm_password) {
+        this.username = username;
+        this.first_name = first_name;
+        this.password = password;
+        this.last_name = last_name;
+        this.email = email;
+        this.profile = profile;
+        this.confirm_password = confirm_password;
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/app/classes/product.ts":
 /*!************************************!*\
   !*** ./src/app/classes/product.ts ***!
@@ -1321,14 +1338,12 @@ class ShareEventNode {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "User", function() { return User; });
 class User {
-    constructor(profile, username = null, first_name = null, password = null, last_name = null, email = null, confirm_password) {
+    constructor(profile, username = null, first_name = null, last_name = null, email = null) {
         this.username = username;
         this.first_name = first_name;
-        this.password = password;
         this.last_name = last_name;
         this.email = email;
         this.profile = profile;
-        this.confirm_password = confirm_password;
     }
 }
 
