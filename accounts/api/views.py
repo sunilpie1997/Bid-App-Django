@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework import generics
 from rest_framework import status
 from PIL import Image
-from rest_framework.parsers import FileUploadParser
+from rest_framework.parsers import FileUploadParser,MultiPartParser
 from rest_framework.permissions import IsAdminUser,IsAuthenticated,AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -47,7 +47,7 @@ class UserByAdminAPIView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field="username"
 
 class ProfileImageUploadView(APIView):
-    parser_class=(FileUploadParser,)
+    parser_class=(MultiPartParser,)
     permission_classes=[IsAuthenticated]
 
     def patch(self,request,filename,format=None):
