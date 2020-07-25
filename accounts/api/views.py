@@ -47,26 +47,28 @@ class UserByAdminAPIView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field="username"
 
 class ProfileImageUploadView(APIView):
-    parser_class=(FileUploadParser,)
+    parser_class=(ImageUploadParser,)
     permission_classes=[IsAuthenticated]
 
     def patch(self,request,filename,format=None):
         if 'file' not in request.data:
             return Response({"detail":"no image received"},status=status.HTTP_400_BAD_REQUEST)
         profileImage=request.data['file']
+        print("first stage crossed")
 
         if(profileImage.size>1000000):
             return Response({"detail":"max file size supported is 1 mb"},status=status.HTTP_400_BAD_REQUEST)
-        
+        print("second stage crossed")
         if(len(profileImage.name)>30):
             return Response({"detail":"file name too long. Max length is 30 chars"})
-            
+        print("third stage crossed")   
         try:
             img=Image.open(profileImage)
             img.verify()
+            print("fourth stage crossed")
         except:
             return Response({"detail":"unsupported image format"},status=status.HTTP_400_BAD_REQUEST)
-        
+            print("fourth stage crossed part 2")
         profile_object=get_object_or_404(Profile,user_id=request.user.id)#get profile
         profile_object.image.save(profileImage.name,profileImage,save=True)
         return Response(status=status.HTTP_202_ACCEPTED)
