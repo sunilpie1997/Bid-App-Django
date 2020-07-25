@@ -47,7 +47,7 @@ class UserByAdminAPIView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field="username"
 
 class ProfileImageUploadView(APIView):
-    parser_class=(MultiPartParser,)
+    parser_class=(ImageUploadParser,)
     permission_classes=[IsAuthenticated]
 
     def patch(self,request,filename,format=None):
