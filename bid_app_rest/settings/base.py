@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*#_171gx_n6n1r!&dq-b&w3a5^14zk_@j6uwx=lvu_6&%w4&5f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','bid-app-project.herokuapp.com']
 
@@ -201,22 +201,27 @@ USE_TZ = True
 USE_S3 = os.getenv('USE_S3') == 'TRUE'
 
 if USE_S3:
+    """
     AWS_QUERYSTRING_AUTH = False
 
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_KEY')
     AWS_STORAGE_BUCKET_NAME = os.getenv('S3_BUCKET')
 
-    # s3 public media settings
-    #PUBLIC_MEDIA_LOCATION = 'media'
-    MEDIA_URL = 'https://%s.s3.ap-south-1.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
-    #MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+    
+    MEDIA_URL = 'https://%s.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
     DEFAULT_FILE_STORAGE = 'bid_app_rest.storage_backends.MediaStorage'
-
+    """
+    
+    GS_BUCKET_NAME = 'bid-app-project'
+    GS_PROJECT_ID:"bid-app-project-1595678691377"
+    GS_FILE_OVERWRITE :False
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 else:
     
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
