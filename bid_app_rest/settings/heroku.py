@@ -9,7 +9,7 @@ from bid_app_rest.settings.base import *
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, True)
+    DEBUG=(bool, False)
 )
 
 # False if not in os.environ
