@@ -209,7 +209,7 @@ if USE_S3:
 
     # s3 public media settings
     #PUBLIC_MEDIA_LOCATION = 'media'
-    MEDIA_URL = 'http://%s.s3.ap-south-1.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
+    MEDIA_URL = 'https://%s.s3.ap-south-1.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
     #MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'bid_app_rest.storage_backends.MediaStorage'
 
