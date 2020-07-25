@@ -5,6 +5,7 @@ django-heroku
 whitenoise
 boto3
 django-storages
+django-storages[google]
 psycopg2
 psycopg2-binary
 dj-database-url
