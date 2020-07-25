@@ -5,7 +5,7 @@ from .views import *
 def base_exception_handler(exc, context):
     response = exception_handler(exc, context)
     print(context["view"])
-    print(response)
+    print(response.data)
     sample={}
     # check that a ValidationError exception is raised
     if isinstance(exc, ValidationError):

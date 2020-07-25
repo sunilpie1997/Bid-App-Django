@@ -2,3 +2,5 @@
 extra google cloud settings for heroku
 
 link:https://elements.heroku.com/buildpacks/elishaterada/heroku-google-application-credentials-buildpack
+
+link:https://devcenter.heroku.com/articles/using-multiple-buildpacks-for-an-app
