@@ -1,3 +1,4 @@
 
+extra google cloud settings for heroku
 
-1)set up user and group in amazon aws with proper permissions
+link:https://elements.heroku.com/buildpacks/elishaterada/heroku-google-application-credentials-buildpack
