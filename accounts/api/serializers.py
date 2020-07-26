@@ -8,7 +8,8 @@ User = get_user_model()#custom user model
 def validate_contact_no(user,contact_no):#user will be 'None' when creating user and will be an instance of 'User' while upadting user
     if(isinstance(user,User)):
         print("come here, i will catch you")
-        value_count=Profile.objects.exclude(contact_no=user.profile.contact_no).count()
+        filtered_set=Profile.objects.exclude(user_id=user.id)
+        value_count=filtered_set.filter(contact_no=user.profile.contact_no).count()
         if(value_count>0):#excluding current instance's contact_no for uniqueness(see limitation of updating nested serializers)
             #count() is more efficient than len()
             return False
@@ -116,12 +117,6 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
         model=Profile
         fields=['contact_no','address','pincode','is_auctioneer','bio','image','is_bidder']
     
-    def validate_contact_no(self,value):
-        value_count=Profile.objects.filter(contact_no=value).count()
-        if(value_count>1):#1 will indiacate only one occurence of given contact_no
-        #count() is more efficient than len()
-            raise serializers.ValidationError("account with this contact no. exists")
-        return value
 
 #for retrieve ,update and delete by admin only
 class UserByAdminSerializer(serializers.ModelSerializer):
