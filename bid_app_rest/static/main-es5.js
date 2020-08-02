@@ -9354,12 +9354,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "updateProfileImage",
         value: function updateProfileImage(formData, filename) {
-          return this.http.post(this.url + 'profile/' + filename + '/', formData, {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-              'Content-Type': 'multipart/form-data'
-            }),
-            observe: 'response'
-          }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+          return this.http.post(this.url + 'profile/' + filename + '/', formData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
         }
         /* get profile image by user */
 
