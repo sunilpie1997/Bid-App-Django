@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework import status
 from PIL import Image
-from rest_framework.parsers import FileUploadParser,MultiPartParser
+from rest_framework.parsers import FileUploadParser,MultiPartParser,FormParser
 from rest_framework.permissions import IsAdminUser,IsAuthenticated,AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -56,7 +56,7 @@ class UserByAdminAPIView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field="username"
 
 class ProfileImageUploadView(APIView):
-    parser_classes=[MultiPartParser]
+    parser_classes=(MultiPartParser,FormParser)
     permission_classes=[IsAuthenticated]
 
     def post(self,request,filename,format=None):
