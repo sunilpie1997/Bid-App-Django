@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from accounts.models import Profile
+from accounts.models import Profile,ProfileImageModel
 from django.contrib.auth import get_user_model
     
 User = get_user_model()#custom user model
@@ -22,10 +22,16 @@ def validate_contact_no(user,contact_no):#user will be 'None' when creating user
             return True
 
 
+
+class ProfileImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=ProfileImageModel
+        fields=['uploaded_at','image']
 #profile serializer(for retrieval and creation and full updation)-->by user
 class ProfileSerializer(serializers.ModelSerializer):
     
-    image=serializers.ImageField(read_only=True)
+    
     contact_no =serializers.RegexField("^[1-9][0-9]{9}$",required=True)
     address = serializers.CharField(max_length=100,min_length=10,required=True)
     pincode = serializers.RegexField("^[1-9][0-9]{5}$",required=True)
@@ -34,7 +40,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     is_bidder=serializers.BooleanField(read_only=True)
     class Meta:
         model=Profile
-        fields=['contact_no','address','pincode','is_auctioneer','bio','image','is_bidder']
+        fields=['contact_no','address','pincode','is_auctioneer','bio','is_bidder']
 
 
 # user serializer (for retrieval and Full updation by individual user)except password
@@ -104,7 +110,6 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 #for full profile update by admin
 class ProfileUpdateSerializer(serializers.ModelSerializer):
-    image=serializers.ImageField(read_only=True)
     contact_no =serializers.RegexField("^[1-9][0-9]{9}$",required=True)
     #,validators=[UniqueValidator(queryset=Profile.objects.all(),message="Account with this contact no exists")]
     #limitation of validators in django rest framework
@@ -115,7 +120,7 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
     is_bidder=serializers.BooleanField()
     class Meta:
         model=Profile
-        fields=['contact_no','address','pincode','is_auctioneer','bio','image','is_bidder']
+        fields=['contact_no','address','pincode','is_auctioneer','bio','is_bidder']
     
 
 #for retrieve ,update and delete by admin only

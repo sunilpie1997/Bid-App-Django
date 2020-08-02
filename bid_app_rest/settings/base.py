@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'bid_app_rest.wsgi.application'
 DATABASES = {
        'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bid_app_project',
-        'USER':'postgres',
-        'PASSWORD':'1234',
+        'NAME': 'bid-app-project',
+        'USER':'sunilpie',
+        'PASSWORD':'sunilpie',
         'HOST':'localhost',
 
     }
@@ -205,22 +205,20 @@ USE_TZ = True
 USE_S3 = os.getenv('USE_S3') == 'TRUE'
 
 if USE_S3:
-    """
-    AWS_QUERYSTRING_AUTH = False
+    
 
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_KEY')
     AWS_STORAGE_BUCKET_NAME = os.getenv('S3_BUCKET')
+    #AWS_S3_REGION_NAME = 'ap-south-1'
 
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     
-    MEDIA_URL = 'https://%s.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'bid_app_rest.storage_backends.MediaStorage'
-    """
     
-    GS_BUCKET_NAME = 'bid-app-project'
-    GS_PROJECT_ID:"bid-app-project-1595678691377"
-    GS_FILE_OVERWRITE :False
-    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 else:
     
     MEDIA_URL = '/media/'

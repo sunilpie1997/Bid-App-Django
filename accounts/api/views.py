@@ -1,19 +1,28 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from rest_framework.decorators import api_view 
 from rest_framework import generics
 from rest_framework import status
 from PIL import Image
-from rest_framework.parsers import FileUploadParser,MultiPartParser
+from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser,IsAuthenticated,AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from accounts.models import Profile
-from .serializers import UserByAdminSerializer,UserCreateSerializer,UserSerializer
+from accounts.models import Profile,ProfileImageModel
+from .serializers import UserByAdminSerializer,UserCreateSerializer,UserSerializer,ProfileImageSerializer
 from .parsers import ImageUploadParser
 User = get_user_model()#custom user model
 
    
+
+class ProfileImageView(generics.RetrieveAPIView):
+    queryset=ProfileImageModel.objects.all()
+    serializer_class=ProfileImageSerializer
+    permission_classes=[IsAuthenticated]
+    def get_object(self):
+        queryset = self.filter_queryset(self.get_queryset())
+        obj = get_object_or_404(queryset,user_id=self.request.user.id)
+        return obj
+
       
 
 class UserRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
@@ -47,10 +56,10 @@ class UserByAdminAPIView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field="username"
 
 class ProfileImageUploadView(APIView):
-    parser_class=(ImageUploadParser,)
+    parser_classes=[FileUploadParser]
     permission_classes=[IsAuthenticated]
 
-    def patch(self,request,filename,format=None):
+    def post(self,request,filename,format=None):
         if 'file' not in request.data:
             return Response({"detail":"no image received"},status=status.HTTP_400_BAD_REQUEST)
         profileImage=request.data['file']
@@ -59,13 +68,16 @@ class ProfileImageUploadView(APIView):
             return Response({"detail":"max file size supported is 1 mb"},status=status.HTTP_400_BAD_REQUEST)
         if(len(profileImage.name)>30):
             return Response({"detail":"file name too long. Max length is 30 chars"})
+        """
         try:
             img=Image.open(profileImage)
             img.verify()
         except:
             return Response({"detail":"unsupported image format"},status=status.HTTP_400_BAD_REQUEST)
-        profile_object=get_object_or_404(Profile,user_id=request.user.id)#get profile
-        profile_object.image.save(profileImage.name,profileImage,save=True)
-        return Response(status=status.HTTP_202_ACCEPTED)
 
-
+        """
+        imageObject=get_object_or_404(ProfileImageModel,user_id=request.user.id)
+        imageObject.image=profileImage
+        imageObject.save(force_update=True)
+        image_url = imageObject.image.url
+        return Response({"image_url":image_url},status=status.HTTP_202_ACCEPTED)

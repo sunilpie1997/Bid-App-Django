@@ -1,0 +1,4 @@
+
+For uplaoding files,check out this link:
+
+Link:https://coderbook.com/@marcus/how-to-store-django-static-and-media-files-on-s3-in-production/
