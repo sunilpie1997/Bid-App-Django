@@ -13,7 +13,6 @@ from django.core.exceptions import ObjectDoesNotExist
 User=get_user_model()
 
 #Event view
-#no need of seperate view for retrieving each event..EventListAPIView is enough
 
 class EventRetrieveAPIView(generics.RetrieveAPIView):
     queryset=Event.objects.all()
@@ -36,29 +35,6 @@ class EventListAPIView(generics.ListAPIView):
     queryset=Event.objects.all().order_by("-date_added")
     serializer_class=EventSerializer
     permission_classes=[AllowAny]
-    """
-    def get_queryset(self):
-        queryset = Event.objects.all()
-        owner_id = self.request.query_params.get('owner_id', None)
-        print(owner_id)
-        if owner_id is not None:
-            queryset = queryset.filter(owner_id=owner_id)
-        return queryset
-
-    """   
-
-    
-"""
-#Product view
-
-*******product is retrieved with event itself in EventListAPIView****
-class ProductRetrieveAPIView(generics.RetrieveAPIView):
-    queryset=Product.objects.all()
-    serializer_class=ProductSerializer
-    permission_classes=[AllowAny]
-    
-"""
-
 
 #Bids view
 
