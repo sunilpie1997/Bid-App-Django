@@ -6349,7 +6349,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Image size should be less than 1 Mb");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Image size should be less than 185 Kb");
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
       }
@@ -6436,7 +6436,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             var file = event.target.files[0];
 
             if (file.size <= 185000) {
-              //184  kb....it's special
+              //185  kb....
               console.log(file.size);
               this.imagefile = file;
               this.is_error = false;
@@ -9356,7 +9356,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function updateProfileImage(formData, filename) {
           return this.http.post(this.url + 'profile/' + filename + '/', formData, {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-              'Content-Type': 'image/*'
+              'Content-Type': 'multipart/form-data'
             }),
             observe: 'response'
           }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));

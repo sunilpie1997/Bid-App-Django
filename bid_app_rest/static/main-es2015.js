@@ -3127,7 +3127,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function ProfileImageComponent_div_8_div_4_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Image size should be less than 1 Mb");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "Image size should be less than 185 Kb");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } }
 function ProfileImageComponent_div_8_Template(rf, ctx) { if (rf & 1) {
@@ -3165,7 +3165,7 @@ class ProfileImageComponent {
     onFileSelect(event) {
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
-            if (file.size <= 185000) { //184  kb....it's special
+            if (file.size <= 185000) { //185  kb....
                 console.log(file.size);
                 this.imagefile = file;
                 this.is_error = false;
@@ -4624,7 +4624,7 @@ class UserService {
     }
     /* update profile image by user --->change contentType to match as below*/
     updateProfileImage(formData, filename) {
-        return this.http.post(this.url + 'profile/' + filename + '/', formData, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'image/*' }), observe: 'response' }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+        return this.http.post(this.url + 'profile/' + filename + '/', formData, { headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'multipart/form-data' }), observe: 'response' }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     }
     /* get profile image by user */
     getProfileImage() {
