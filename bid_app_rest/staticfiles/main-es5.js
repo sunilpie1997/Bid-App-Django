@@ -921,13 +921,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _app_services_user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! @app/services/user.service */
+    "./src/app/services/user.service.ts");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @angular/common */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
     /* harmony import */
 
 
-    var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @angular/forms */
     "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
 
@@ -1140,13 +1146,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }
 
     var LoginComponent = /*#__PURE__*/function () {
-      function LoginComponent(authService, router, route, shareUser) {
+      function LoginComponent(authService, router, route, shareUser, userService) {
         _classCallCheck(this, LoginComponent);
 
         this.authService = authService;
         this.router = router;
         this.route = route;
-        this.shareUser = shareUser; //represents if anyone is logged in?
+        this.shareUser = shareUser;
+        this.userService = userService; //represents if anyone is logged in?
 
         this.loginStatus = false;
       }
@@ -1196,7 +1203,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             _this4.authService.updateData(); //getting user profile after login---
 
 
-            _this4.getUserFromHttp();
+            _this4.getUserFromHttp(); //getting user profile image from amazon aws
+
+
+            _this4.getProfileImage();
           }, function (error) {
             alert(error);
           }); //alert user about status
@@ -1247,13 +1257,24 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             alert(error);
           });
         }
+        /* get profile image */
+
+      }, {
+        key: "getProfileImage",
+        value: function getProfileImage() {
+          var _this6 = this;
+
+          this.userService.getProfileImage().subscribe(function (resp) {
+            _this6.shareUser.setProfileImage(resp.body);
+          });
+        }
       }]);
 
       return LoginComponent;
     }();
 
     LoginComponent.ɵfac = function LoginComponent_Factory(t) {
-      return new (t || LoginComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_share_user_service__WEBPACK_IMPORTED_MODULE_5__["ShareUserService"]));
+      return new (t || LoginComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_share_user_service__WEBPACK_IMPORTED_MODULE_5__["ShareUserService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"]));
     };
 
     LoginComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
@@ -1287,7 +1308,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.loginStatus);
         }
       },
-      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgForm"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_7__["NgModel"]],
+      directives: [_angular_common__WEBPACK_IMPORTED_MODULE_7__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgForm"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["RequiredValidator"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__["NgModel"]],
       styles: [""]
     });
     /*@__PURE__*/
@@ -1309,6 +1330,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]
         }, {
           type: _app_services_share_user_service__WEBPACK_IMPORTED_MODULE_5__["ShareUserService"]
+        }, {
+          type: _app_services_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"]
         }];
       }, null);
     })();
@@ -1993,7 +2016,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "onSubmit",
         value: function onSubmit() {
-          var _this6 = this;
+          var _this7 = this;
 
           this.registerService.registerUser(this.user).subscribe(function (resp) {
             console.log(resp.status);
@@ -2002,8 +2025,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
               //if user is created
               alert("you have registered successfully");
 
-              _this6.router.navigate(['../login'], {
-                relativeTo: _this6.route
+              _this7.router.navigate(['../login'], {
+                relativeTo: _this7.route
               });
             }
           }, function (error) {
@@ -2600,6 +2623,36 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       this.description = description;
       this.image = image;
       this.name = name;
+    };
+    /***/
+
+  },
+
+  /***/
+  "./src/app/classes/profile-image.ts":
+  /*!******************************************!*\
+    !*** ./src/app/classes/profile-image.ts ***!
+    \******************************************/
+
+  /*! exports provided: ProfileImage */
+
+  /***/
+  function srcAppClassesProfileImageTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "ProfileImage", function () {
+      return ProfileImage;
+    });
+
+    var ProfileImage = function ProfileImage() {
+      _classCallCheck(this, ProfileImage);
+
+      this.uploaded_at = null;
+      this.image = null;
     };
     /***/
 
@@ -3220,15 +3273,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "onSearch",
         value: function onSearch() {
-          var _this7 = this;
+          var _this8 = this;
 
           this.updateTable = false; //getting user from http request
 
           this.userService.getUserByUsername(this.username).subscribe(function (resp) {
-            _this7.user = resp.body;
-            _this7.showTable = true; //table is displayed on successfully receiving user
+            _this8.user = resp.body;
+            _this8.showTable = true; //table is displayed on successfully receiving user
           }, function (error) {
-            _this7.error = error;
+            _this8.error = error;
             alert(error);
           });
         }
@@ -5426,44 +5479,44 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(EventDetailComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this8 = this;
+          var _this9 = this;
 
           //initialising with default values
           this.event = new _app_classes_bid_event__WEBPACK_IMPORTED_MODULE_1__["BidEvent"](new _app_classes_product__WEBPACK_IMPORTED_MODULE_2__["Product"]()); //obtaining event_id from route parameters
 
           this.route.paramMap.subscribe(function (params) {
             var id = parseInt(params.get('id'));
-            _this8.event_id = id;
+            _this9.event_id = id;
           }); //obtaining event with given event_id from service providing 'events array'
 
           this.shareEvent.getShareEventNode().subscribe(function (val) {
             if (val.event_list.length != 0) {
-              _this8.event = val.event_list.filter(function (x) {
-                return x.id == _this8.event_id;
+              _this9.event = val.event_list.filter(function (x) {
+                return x.id == _this9.event_id;
               })[0];
 
-              if (_this8.event != null) {
+              if (_this9.event != null) {
                 //callback that is executed only after receiving event details
-                _this8.authService.getLoggedInUser().subscribe(function (resp) {
-                  return _this8.is_staff = resp["is_staff"];
+                _this9.authService.getLoggedInUser().subscribe(function (resp) {
+                  return _this9.is_staff = resp["is_staff"];
                 });
 
                 var current_datetime = Date.now();
 
-                var parsed_start_date = _this8.parse_date(_this8.event.start_date); //converts in milliseconds since epoch
+                var parsed_start_date = _this9.parse_date(_this9.event.start_date); //converts in milliseconds since epoch
 
 
-                var parsed_deadline = _this8.parse_date(_this8.event.deadline);
+                var parsed_deadline = _this9.parse_date(_this9.event.deadline);
 
                 if (current_datetime >= parsed_start_date && current_datetime < parsed_deadline) {
-                  _this8.can_bid = true; //getting 'is_bidder' property of currently logged in user
+                  _this9.can_bid = true; //getting 'is_bidder' property of currently logged in user
 
-                  _this8.shareUser.getUser().subscribe(function (val) {
-                    return _this8.is_bidder = val.profile["is_bidder"];
+                  _this9.shareUser.getUser().subscribe(function (val) {
+                    return _this9.is_bidder = val.profile["is_bidder"];
                   }); //will tell if user is admin
 
 
-                  console.log(_this8.is_bidder + " " + _this8.can_bid);
+                  console.log(_this9.is_bidder + " " + _this9.can_bid);
                 }
               }
             }
@@ -5521,11 +5574,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "getHighestBid",
         value: function getHighestBid() {
-          var _this9 = this;
+          var _this10 = this;
 
           this.bidService.retrieveHighestBid(this.event_id).subscribe(function (resp) {
-            _this9.highest_bid = resp.body["highest_bid"];
-            _this9.highest_bid_user = resp.body["user"];
+            _this10.highest_bid = resp.body["highest_bid"];
+            _this10.highest_bid_user = resp.body["user"];
           }, function (error) {
             return alert(error);
           });
@@ -6021,12 +6074,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(EventListComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this10 = this;
+          var _this11 = this;
 
           //obtaining all events from this service--->returns behavior subject containing events array
           this.shareEvent.getShareEventNode().subscribe(function (value) {
-            _this10.eventListObject = value;
-            _this10.filtered_set = _this10.eventListObject.event_list;
+            _this11.eventListObject = value;
+            _this11.filtered_set = _this11.eventListObject.event_list;
           });
           console.log("displaying new list");
         }
@@ -6362,7 +6415,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.shareUser = shareUser;
         this.userService = userService;
-        this.image_object = null;
         this.is_error = false;
         this.imagefile = null;
         this.want_to_update = false;
@@ -6371,10 +6423,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(ProfileImageComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this11 = this;
+          var _this12 = this;
 
-          this.userService.getProfileImage().subscribe(function (resp) {
-            return _this11.image_object = resp.body;
+          this.shareUser.getProfileImage().subscribe(function (resp) {
+            return _this12.image_object = resp;
           });
         }
       }, {
@@ -7428,13 +7480,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony import */
 
 
-    var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _app_services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @app/services/user.service */
+    "./src/app/services/user.service.ts");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! @angular/common */
     "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
     /* harmony import */
 
 
-    var _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    var _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! @app/dashboard/profile/profile-update/profile-update.component */
     "./src/app/dashboard/profile/profile-update/profile-update.component.ts");
 
@@ -7444,7 +7502,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 10);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ProfileComponent_ng_container_64_Template_button_click_1_listener() {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r4);
@@ -7468,7 +7526,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "button", 10);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ProfileComponent_ng_container_65_Template_button_click_1_listener() {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r6);
@@ -7490,7 +7548,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](0);
 
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-profile-update", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-profile-update", 15);
 
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
       }
@@ -7505,24 +7563,28 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }
 
     var ProfileComponent = /*#__PURE__*/function () {
-      function ProfileComponent(authService, router, route, shareUser) {
+      function ProfileComponent(authService, router, route, shareUser, userService) {
         _classCallCheck(this, ProfileComponent);
 
         this.authService = authService;
         this.router = router;
         this.route = route;
         this.shareUser = shareUser;
+        this.userService = userService;
         this.show_update_form = false;
       }
 
       _createClass(ProfileComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {
-          var _this12 = this;
+          var _this13 = this;
 
           //getting complete user from this service-->returns behavior subject 'user'
           this.shareUser.getUser().subscribe(function (resp) {
-            _this12.user = resp;
+            _this13.user = resp;
+          });
+          this.shareUser.getProfileImage().subscribe(function (resp) {
+            _this13.image_object = resp;
           });
         }
       }, {
@@ -7563,14 +7625,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }, {
         key: "refreshProfile",
         value: function refreshProfile() {
-          var _this13 = this;
+          var _this14 = this;
 
           this.authService.getUser().subscribe(function (resp) {
             alert("refreshed");
 
-            _this13.shareUser.setUser(resp.body);
+            _this14.shareUser.setUser(resp.body);
           }, function (error) {
             return alert(error);
+          });
+          this.userService.getProfileImage().subscribe(function (resp) {
+            _this14.shareUser.setProfileImage(resp.body);
           });
         }
       }]);
@@ -7579,15 +7644,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     }();
 
     ProfileComponent.ɵfac = function ProfileComponent_Factory(t) {
-      return new (t || ProfileComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_share_user_service__WEBPACK_IMPORTED_MODULE_3__["ShareUserService"]));
+      return new (t || ProfileComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_share_user_service__WEBPACK_IMPORTED_MODULE_3__["ShareUserService"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_app_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]));
     };
 
     ProfileComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
       type: ProfileComponent,
       selectors: [["app-profile"]],
       decls: 67,
-      vars: 16,
-      consts: [[1, "container"], [1, "container-fluid"], [1, "row", "row-cols-1", "row-cols-md-2"], [1, "col", "mb-4"], [1, "card", "text-white", "bg-dark", "mb-3"], ["routerLink", "/profile/image"], [1, "card-body"], [1, "card-title"], [1, "card-text"], [1, "btn", "btn-primary", 3, "click"], [1, "table", "table-hover", "table-dark"], ["scope", "col"], ["scope", "row"], [4, "ngIf"], [3, "user"]],
+      vars: 17,
+      consts: [[1, "container"], [1, "container-fluid"], [1, "row", "row-cols-1", "row-cols-md-2"], [1, "col", "mb-4"], [1, "card", "text-white", "bg-dark", "mb-3"], ["routerLink", "/profile/image"], ["alt", "Profile Image", 1, "card-img-top", 3, "src"], [1, "card-body"], [1, "card-title"], [1, "card-text"], [1, "btn", "btn-primary", 3, "click"], [1, "table", "table-hover", "table-dark"], ["scope", "col"], ["scope", "row"], [4, "ngIf"], [3, "user"]],
       template: function ProfileComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
@@ -7602,13 +7667,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "a", 5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "View Image");
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](6, "img", 6);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "div", 7);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "h5", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "h5", 8);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9);
 
@@ -7616,13 +7681,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "p", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "p", 9);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](12, "This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "p", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](13, "p", 9);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](14);
 
@@ -7630,9 +7695,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "p", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](16, "p", 9);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "button", 9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](17, "button", 10);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ProfileComponent_Template_button_click_17_listener() {
             return ctx.refreshProfile();
@@ -7644,9 +7709,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "p", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](19, "p", 9);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "button", 9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](20, "button", 10);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function ProfileComponent_Template_button_click_20_listener() {
             return ctx.updateProfile();
@@ -7666,13 +7731,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](22, "div", 3);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "table", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](23, "table", 11);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](24, "thead");
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](25, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "th", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](26, "th", 12);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](27, "User Details:");
 
@@ -7686,7 +7751,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](29, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "th", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](30, "th", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](31, "Username");
 
@@ -7702,7 +7767,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](34, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "th", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](35, "th", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](36, "Email");
 
@@ -7718,7 +7783,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](39, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "th", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](40, "th", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](41, "Contact No");
 
@@ -7734,7 +7799,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](44, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "th", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](45, "th", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](46, "Address");
 
@@ -7750,7 +7815,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](49, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "th", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](50, "th", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](51, "Auctioneer");
 
@@ -7766,7 +7831,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](54, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "th", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](55, "th", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](56, "Bidder");
 
@@ -7782,7 +7847,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](59, "tr");
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "th", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](60, "th", 13);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](61, "Pincode");
 
@@ -7800,15 +7865,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](64, ProfileComponent_ng_container_64_Template, 3, 0, "ng-container", 13);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](64, ProfileComponent_ng_container_64_Template, 3, 0, "ng-container", 14);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](65, ProfileComponent_ng_container_65_Template, 3, 0, "ng-container", 13);
-
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](65, ProfileComponent_ng_container_65_Template, 3, 0, "ng-container", 14);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](66, ProfileComponent_ng_container_66_Template, 2, 1, "ng-container", 13);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](66, ProfileComponent_ng_container_66_Template, 2, 1, "ng-container", 14);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 
@@ -7816,13 +7881,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }
 
         if (rf & 2) {
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](6);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](10, 12, ctx.user.first_name + " " + ctx.user.last_name));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpropertyInterpolate"]("src", ctx.image_object.image, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"]);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](10, 13, ctx.user.first_name + " " + ctx.user.last_name));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
 
-          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](15, 14, ctx.user.profile.bio));
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](15, 15, ctx.user.profile.bio));
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](19);
 
@@ -7865,8 +7934,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.show_update_form);
         }
       },
-      directives: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["NgIf"], _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_5__["ProfileUpdateComponent"]],
-      pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["TitleCasePipe"]],
+      directives: [_angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterLinkWithHref"], _angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], _app_dashboard_profile_profile_update_profile_update_component__WEBPACK_IMPORTED_MODULE_6__["ProfileUpdateComponent"]],
+      pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_5__["TitleCasePipe"]],
       styles: [""]
     });
     /*@__PURE__*/
@@ -7888,6 +7957,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]
         }, {
           type: _app_services_share_user_service__WEBPACK_IMPORTED_MODULE_3__["ShareUserService"]
+        }, {
+          type: _app_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]
         }];
       }, null);
     })();
@@ -7948,12 +8019,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(AdminGuardService, [{
         key: "canActivate",
         value: function canActivate() {
-          var _this14 = this;
+          var _this15 = this;
 
           //receiving values from behavior subject 'LoggedInUser'
           this.authService.getLoggedInUser().subscribe(function (value) {
-            _this14.loginStatus = value["loginStatus"];
-            _this14.is_staff = value["is_staff"];
+            _this15.loginStatus = value["loginStatus"];
+            _this15.is_staff = value["is_staff"];
           });
 
           if (!this.loginStatus || !this.is_staff) {
@@ -8052,10 +8123,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(AuthGuardService, [{
         key: "canActivate",
         value: function canActivate() {
-          var _this15 = this;
+          var _this16 = this;
 
           this.auth.getLoggedInUser().subscribe(function (resp) {
-            _this15.loginStatus = resp["loginStatus"];
+            _this16.loginStatus = resp["loginStatus"];
           });
 
           if (!this.loginStatus) {
@@ -8585,13 +8656,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       _createClass(CanAuctionGuardService, [{
         key: "canActivate",
         value: function canActivate() {
-          var _this16 = this;
+          var _this17 = this;
 
           this.authService.getLoggedInUser().subscribe(function (resp) {
-            return _this16.loginStatus = resp["loginStatus"];
+            return _this17.loginStatus = resp["loginStatus"];
           });
           this.shareUser.getUser().subscribe(function (resp) {
-            return _this16.can_auction = resp.profile["is_auctioneer"];
+            return _this17.can_auction = resp.profile["is_auctioneer"];
           });
           console.log(this.can_auction);
 
@@ -9098,6 +9169,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _app_classes_profile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @app/classes/profile */
     "./src/app/classes/profile.ts");
+    /* harmony import */
+
+
+    var _app_classes_profile_image__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @app/classes/profile-image */
+    "./src/app/classes/profile-image.ts");
 
     var ShareUserService = /*#__PURE__*/function () {
       function ShareUserService() {
@@ -9105,6 +9182,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         //behavior subject for storing complete user profile
         this.shareUser = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](new _app_classes_user__WEBPACK_IMPORTED_MODULE_1__["User"](new _app_classes_profile__WEBPACK_IMPORTED_MODULE_3__["Profile"]()));
+        /* stores user profile image */
+
+        this.profileImage = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](new _app_classes_profile_image__WEBPACK_IMPORTED_MODULE_4__["ProfileImage"]());
       }
 
       _createClass(ShareUserService, [{
@@ -9113,9 +9193,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           return this.shareUser.asObservable();
         }
       }, {
+        key: "getProfileImage",
+        value: function getProfileImage() {
+          return this.profileImage.asObservable();
+        }
+      }, {
         key: "setUser",
         value: function setUser(user) {
           this.shareUser.next(user);
+        }
+      }, {
+        key: "setProfileImage",
+        value: function setProfileImage(profileImage) {
+          this.profileImage.next(profileImage);
         }
       }]);
 
@@ -9258,12 +9348,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
           }
         }
-        /* update profile image by user */
+        /* update profile image by user --->change contentType to match as below*/
 
       }, {
         key: "updateProfileImage",
         value: function updateProfileImage(formData, filename) {
-          return this.http.post(this.url + 'profile/' + filename + '/', formData).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+          return this.http.post(this.url + 'profile/' + filename + '/', formData, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+              'Content-Type': 'image/*'
+            }),
+            observe: 'response'
+          }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
         }
         /* get profile image by user */
 
@@ -9272,7 +9367,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function getProfileImage() {
           return this.http.get(this.url + 'image/', {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-              'Content-Type': 'application/json'
+              'Content-Type': 'image/*'
             }),
             observe: 'response'
           }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
