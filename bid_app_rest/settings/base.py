@@ -31,12 +31,12 @@ AUTH_USER_MODEL="accounts.BidAppUser"
 
 # Application definition
 
-#CORS_ORIGIN_ALLOW_ALL=True 
-
+CORS_ORIGIN_ALLOW_ALL=True 
+"""
 CORS_ORIGIN_WHITELIST = [
     "https://bid-app-project.herokuapp.com",
 ]
-
+"""
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
