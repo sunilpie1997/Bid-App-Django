@@ -6435,8 +6435,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           if (event.target.files.length > 0) {
             var file = event.target.files[0];
 
-            if (file.size <= 1000000) {
-              //1 mb
+            if (file.size <= 185000) {
+              //184  kb....it's special
               console.log(file.size);
               this.imagefile = file;
               this.is_error = false;
@@ -7585,6 +7585,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           this.shareUser.getProfileImage().subscribe(function (resp) {
             _this13.image_object = resp;
+            console.log(JSON.stringify(_this13.image_object));
           });
         }
       }, {

@@ -3165,7 +3165,7 @@ class ProfileImageComponent {
     onFileSelect(event) {
         if (event.target.files.length > 0) {
             const file = event.target.files[0];
-            if (file.size <= 1000000) { //1 mb
+            if (file.size <= 185000) { //184  kb....it's special
                 console.log(file.size);
                 this.imagefile = file;
                 this.is_error = false;
@@ -3719,6 +3719,7 @@ class ProfileComponent {
         });
         this.shareUser.getProfileImage().subscribe(resp => {
             this.image_object = resp;
+            console.log(JSON.stringify(this.image_object));
         });
     }
     updateProfile() {
