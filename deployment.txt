@@ -64,6 +64,7 @@ Note: Before you export,make sure you have created addon 'Heroku postgres'.....
      Important:here 'username' should be your <github-user-name>  
      Otherwise,the default 'postgres' username was enough:)) 
 
+
      b)GRANT ALL ON ALL TABLES IN SCHEMA public to <username>;
      GRANT ALL ON ALL SEQUENCES IN SCHEMA public to <username>;
      GRANT ALL ON ALL FUNCTIONS IN SCHEMA public to <username>;
