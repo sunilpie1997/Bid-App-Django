@@ -12,6 +12,10 @@ urlpatterns=[
     path('<int:pk>/destroy/',EventDestroyAPIView.as_view(),name='event-destroy'),
     path('create/',EventCreateAPIView.as_view(),name='event-create'),
     
+    #event product image uload view
+    path('<int:event_id>/image/<str:filename>/',ProductImageUploadView.as_view(),name='product-image-upload'),#post request
+
+
     #bids
     path('<int:event_id>/bids/',BidListAPIView.as_view(),name='bid-list'),
     path('<int:event_id>/highest_bid/',HighestBidRetrieveAPIView.as_view(),name='highest-bid'),

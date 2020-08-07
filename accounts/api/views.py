@@ -64,10 +64,10 @@ class ProfileImageUploadView(APIView):
             return Response({"detail":"no image received"},status=status.HTTP_400_BAD_REQUEST)
         profileImage=request.data['file']
 
-        if(profileImage.size>185000):
-            return Response({"detail":"max file size supported is 1 mb"},status=status.HTTP_400_BAD_REQUEST)
+        if(profileImage.size>100000):
+            return Response({"detail":"max file size supported is 100 kb"},status=status.HTTP_400_BAD_REQUEST)
         if(len(profileImage.name)>50):
-            return Response({"detail":"file name too long. Max length is 30 chars"})
+            return Response({"detail":"file name too long. Max length is 50 chars"})
         """
         try:
             img=Image.open(profileImage)

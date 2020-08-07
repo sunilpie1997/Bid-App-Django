@@ -4,6 +4,8 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 from django.core.exceptions import ValidationError
 from datetime import datetime,timedelta
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 
@@ -44,10 +46,30 @@ class Product(models.Model):
     category=models.CharField(max_length=50,blank=False,null=False)
     description= models.CharField(max_length=100,blank=False,null=False)
     event=models.OneToOneField(Event,on_delete=models.CASCADE,related_name="product",primary_key=True)
-    image=models.ImageField(null=True,blank=True)
 
     def __str__(self):
         return "event:"+str(self.event)+"   product:"+self.name
+
+
+#product image model
+
+class ProductImageModel(models.Model):
+    event=models.OneToOneField(Event,on_delete=models.CASCADE,related_name="product_image",primary_key=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    image = models.FileField()
+
+    def __str__(self):
+        return str(self.event)
+    
+
+
+#ProductImageModel object  should be created after event object creation
+@receiver(post_save, sender=Event)
+def create_or_update_event_product_image(sender, instance, created, **kwargs):
+    if created:
+        ProductImageModel.objects.create(event=instance)
+    instance.product_image.save()
+
 
 #Bid model
 class Bid(models.Model):

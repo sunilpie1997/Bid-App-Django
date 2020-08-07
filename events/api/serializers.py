@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from events.models import Event,Product,Bid
+from events.models import Event,Product,Bid,ProductImageModel
 from accounts.models import Profile
 from datetime import timedelta
 from django.utils import timezone
@@ -13,20 +13,27 @@ class ProductSerializer(serializers.ModelSerializer):
     name=serializers.CharField(required=True,max_length=50,min_length=3)
     category=serializers.CharField(required=True,max_length=50,min_length=3)
     description=serializers.CharField(required=True,max_length=100,min_length=3)
-    image=serializers.ImageField(max_length=30,read_only=True)#image field
     class Meta:
         model=Product
-        fields=['name','category','description','image']#also add image
+        fields=['name','category','description']
 
+
+#serializer for event product image
+class ProductImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=ProductImageModel
+        fields=['uploaded_at','image']
 
 
 #serializer for Event(retrieval)
 
 class EventSerializer(serializers.ModelSerializer):
     product=ProductSerializer()
+    product_image=ProductImageSerializer()
     class Meta:
         model=Event
-        fields=['id','date_added','start_date','deadline','base_price','product']
+        fields=['id','date_added','start_date','deadline','base_price','product','product_image']
    
 
 

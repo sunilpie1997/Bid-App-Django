@@ -1,8 +1,9 @@
-from events.models import Event,Product,Bid
-from .serializers import EventSerializer,ProductSerializer,EventCreateSerializer,BidSerializer,BidCreateSerializer
+from events.models import Event,Product,Bid,ProductImageModel
+from .serializers import ProductImageSerializer,EventSerializer,ProductSerializer,EventCreateSerializer,BidSerializer,BidCreateSerializer
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser,IsAuthenticated,AllowAny
 from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework.response import Response
 from accounts.api.serializers import UserSerializer
 from rest_framework import status
@@ -11,6 +12,11 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 
 User=get_user_model()
+
+
+
+
+
 
 #Event view
 
@@ -35,6 +41,31 @@ class EventListAPIView(generics.ListAPIView):
     queryset=Event.objects.all().order_by("-date_added")
     serializer_class=EventSerializer
     permission_classes=[AllowAny]
+
+
+
+#event product image upload view
+
+class ProductImageUploadView(APIView):
+    parser_classes=(MultiPartParser,FormParser)
+    permission_classes=[IsAuthenticated]
+
+    def post(self,request,filename,format=None):
+        if 'file' not in request.data:
+            return Response({"detail":"no image received"},status=status.HTTP_400_BAD_REQUEST)
+        productImage=request.data['file']
+
+        if(productImage.size>100000):
+            return Response({"detail":"max file size supported is 100 kb"},status=status.HTTP_400_BAD_REQUEST)
+        if(len(productImage.name)>50):
+            return Response({"detail":"file name too long. Max length is 50 chars"})
+        
+        imageObject=get_object_or_404(ProductImageModel,event_id=self.kwargs['event_id'])
+        imageObject.image=productImage
+        imageObject.save(force_update=True)
+        image_url = imageObject.image.url
+        return Response({"image_url":image_url},status=status.HTTP_202_ACCEPTED)
+
 
 #Bids view
 
