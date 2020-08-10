@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*#_171gx_n6n1r!&dq-b&w3a5^14zk_@j6uwx=lvu_6&%w4&5f'
 
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','bid-app-project.herokuapp.com']
 
@@ -176,7 +176,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-USE_S3=True   
+USE_S3=False   
 
 if USE_S3:
 
