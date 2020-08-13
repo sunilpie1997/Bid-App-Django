@@ -92,7 +92,7 @@ REST_FRAMEWORK = {
         #user is identified by server in each request by sending JSON Web access token generated
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         #'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
         #'rest_framework.authentication.BasicAuthentication',
     ),
     'NON_FIELD_ERRORS_KEY': 'detail',
