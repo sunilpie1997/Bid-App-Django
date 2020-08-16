@@ -4,3 +4,5 @@ accounts/__pycache__/models.cpython-38.pyc
 bid_app_rest/__pycache__/__init__.cpython-38.pyc
 bid_app_rest/settings/__pycache__/__init__.cpython-38.pyc
 bid_app_rest/settings/__pycache__/base.cpython-38.pyc
+bid-app/src/environments/environment.ts
+bid-app/src/environments/environment.prod.ts
