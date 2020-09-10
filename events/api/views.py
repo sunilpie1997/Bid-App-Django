@@ -21,6 +21,7 @@ User=get_user_model()
 #Event view
 
 class EventRetrieveAPIView(generics.RetrieveAPIView):
+    
     queryset=Event.objects.all()
     serializer_class=EventSerializer
     permission_classes=[AllowAny]
@@ -28,16 +29,21 @@ class EventRetrieveAPIView(generics.RetrieveAPIView):
     
 
 class EventDestroyAPIView(generics.DestroyAPIView):
+    
     queryset=Event.objects.all()
     serializer_class=EventSerializer
     permission_classes=[IsAdminUser]
 
+
 class EventCreateAPIView(generics.CreateAPIView):
+    
     queryset=Event.objects.all()
     serializer_class=EventCreateSerializer
     permission_classes=[IsAuthenticated]
 
+
 class EventListAPIView(generics.ListAPIView):
+    
     queryset=Event.objects.all().order_by("-date_added")
     serializer_class=EventSerializer
     permission_classes=[AllowAny]
@@ -47,39 +53,54 @@ class EventListAPIView(generics.ListAPIView):
 #event product image upload view
 
 class ProductImageUploadView(APIView):
+    
     parser_classes=(MultiPartParser,FormParser)
     permission_classes=[IsAuthenticated]
 
+    
     def post(self,request,filename,format=None):
+        
         if 'file' not in request.data:
+            
             return Response({"detail":"no image received"},status=status.HTTP_400_BAD_REQUEST)
+        
         productImage=request.data['file']
 
         if(productImage.size>100000):
+        
             return Response({"detail":"max file size supported is 100 kb"},status=status.HTTP_400_BAD_REQUEST)
+        
         if(len(productImage.name)>50):
+        
             return Response({"detail":"file name too long. Max length is 50 chars"})
         
         imageObject=get_object_or_404(ProductImageModel,event_id=self.kwargs['event_id'])
         imageObject.image=productImage
         imageObject.save(force_update=True)
         image_url = imageObject.image.url
+        
         return Response({"image_url":image_url},status=status.HTTP_202_ACCEPTED)
 
 
 #Bids view
 
 class BidListAPIView(generics.ListAPIView):
+    
     serializer_class=BidSerializer
     permission_classes=[IsAuthenticated]
 
     def get_queryset(self):
+    
         """
         This view returns a list of all bids placed for
         the event as determined by the event_id portion of the URL.
         """
+    
         event_id = self.kwargs['event_id']
-        event_object=get_object_or_404(Event,id=event_id)#checks whether event of given id exists
+
+        #checks whether event of given id exists
+        event_object=get_object_or_404(Event,id=event_id)
+    
         #only highest 10 bids are retrieved for efficiency
         return Bid.objects.filter(event_id=event_id).order_by("-bid_price")[0:10]
 
@@ -87,33 +108,49 @@ class BidListAPIView(generics.ListAPIView):
     
 #user has to pass event_id in url to view
 class HighestBidRetrieveAPIView(APIView):
+    
     permission_classes=[IsAuthenticated]
+    
+    
     def get(self,request,event_id,format=None): # 'event_id'is passed as extra arguement to get()-->check url
         
         event_id=self.kwargs['event_id']
         event_object=get_object_or_404(Event,id=event_id)#to check event exists
         print(event_object)
+    
         #below query will return only one object if it exists
         try:
 
             highest_bid_object=Bid.objects.filter(event_id=event_id).order_by("-bid_price")[0:1].get()
+            
             if request.user.is_staff:
+                
                 #admin can check details of user placing highest bid at the moment
                 highest_bid_user=User.objects.get(id=highest_bid_object.user_id)
                 user_serializer=UserSerializer(highest_bid_user)#serializing object 
+                
                 return Response({"user":user_serializer.data,"highest_bid":highest_bid_object.bid_price})
+            
             else:
+                
                 return Response({"user":None,"highest_bid": highest_bid_object.bid_price})
+        
         except ObjectDoesNotExist:
+            
             return Response({"detail":"not bids received for this event"},status=status.HTTP_404_NOT_FOUND)
             
+
+
 class BidCreateAPIView(generics.CreateAPIView):
+    
     permission_classes=[IsAuthenticated]
     serializer_class=BidCreateSerializer
 
     def get_serializer_context(self):
+    
         context=super().get_serializer_context()
         context.update({"event_id":self.kwargs['event_id']})
+    
         return context
     
            

@@ -13,15 +13,16 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1','bid-app-project.herokuapp.com']
 
 AUTH_USER_MODEL="accounts.BidAppUser"
 
-
-CORS_ORIGIN_ALLOW_ALL=True 
-
 """
+CORS_ORIGIN_ALLOW_ALL=True 
+"""
+
 CORS_ORIGIN_WHITELIST = [
     "https://bid-app-project.herokuapp.com",
     'http://127.0.0.1:4200'
 ]
-"""
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +39,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',#to enable cross origin sharing while testing with angular
+
+    #to enable cross origin sharing while testing with angular
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,7 +52,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'bid_app_rest.urls'
+
 
 TEMPLATES = [
     {
@@ -67,7 +72,9 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'bid_app_rest.wsgi.application'
+
 
 DATABASES = {
        'default': {
@@ -83,19 +90,24 @@ DATABASES = {
 
 #rest framework settings
 REST_FRAMEWORK = {
+
     'DEFAULT_PERMISSION_CLASSES': (
        'rest_framework.permissions.IsAdminUser',
         #default permission
         
     ),
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
+
         #user is identified by server in each request by sending JSON Web access token generated
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         #'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         #'rest_framework.authentication.SessionAuthentication',
         #'rest_framework.authentication.BasicAuthentication',
     ),
+
     'NON_FIELD_ERRORS_KEY': 'detail',
+
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',],#requests will be accepted with only JSON data unless overriden
 
@@ -104,13 +116,18 @@ REST_FRAMEWORK = {
         #'rest_framework.renderers.AdminRenderer',
         #'rest_framework.renderers.BrowsableAPIRenderer'
     ],
+
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+
     'PAGE_SIZE': 10,
+
     'EXCEPTION_HANDLER':('accounts.api.exceptions.base_exception_handler'),
+
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ],
+
     'DEFAULT_THROTTLE_RATES': {
         'anon': '20/hour',
         'user': '50/hour'
@@ -120,33 +137,48 @@ REST_FRAMEWORK = {
 }
 
 
+
 # JWT settings
 from datetime import timedelta
 SIMPLE_JWT = {
+
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+
     'REFRESH_TOKEN_LIFETIME': timedelta(minutes=1),
+
     'ROTATE_REFRESH_TOKENS': False,
+
     'BLACKLIST_AFTER_ROTATION': True,
 
     'ALGORITHM': 'HS256',
+
     'SIGNING_KEY': os.getenv('SECRET_KEY'),
+
     'VERIFYING_KEY': None,
+
     'AUDIENCE': None,
+
     'ISSUER': None,
 
     'AUTH_HEADER_TYPES': ('Bearer'),
+
     'USER_ID_FIELD': 'id',
+
     'USER_ID_CLAIM': 'user_id',
 
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+
     'TOKEN_TYPE_CLAIM': 'token_type',
 
     'JTI_CLAIM': 'jti',
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1),
+
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(minutes=1),
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

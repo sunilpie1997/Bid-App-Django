@@ -6,6 +6,7 @@ from .views import *
 
 
 urlpatterns=[
+    
     #event
     path('',EventListAPIView.as_view(),name='event-list'),
     path('<int:pk>/',EventRetrieveAPIView.as_view(),name='event-detail'),
@@ -13,8 +14,8 @@ urlpatterns=[
     path('create/',EventCreateAPIView.as_view(),name='event-create'),
     
     #event product image uload view
-    path('<int:event_id>/image/<str:filename>/',ProductImageUploadView.as_view(),name='product-image-upload'),#post request
-
+    #post request
+    path('<int:event_id>/image/<str:filename>/',ProductImageUploadView.as_view(),name='product-image-upload'),
 
     #bids
     path('<int:event_id>/bids/',BidListAPIView.as_view(),name='bid-list'),
